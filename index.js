@@ -1,9 +1,24 @@
 const express = require('express')
 const morgan = require('morgan')
+const { allowedNodeEnvironmentFlags } = require('process')
 const app = express()
 
+morgan.token('type', function (req, res) { return JSON.stringify(req.body)  })
+// morgan.token('type', function (req, res) { return req.headers['content-type'] })
+
 app.use(express.json())
-app.use(morgan('tiny'))
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :type'))
+
+// app.use(morgan(function (tokens, req, res) {
+//   return [
+//     tokens.method(req, res),
+//     tokens.url(req, res),
+//     tokens.status(req, res),
+//     tokens.res(req, res, 'content-length'), '-',
+//     tokens['response-time'](req, res), 'ms'
+//   ].join(' ')
+// }))
+
 let persons = [
   {
     name: "Arto Hellas",
