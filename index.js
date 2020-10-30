@@ -1,23 +1,17 @@
 const express = require('express')
 const morgan = require('morgan')
+const cors = require('cors')
 const { allowedNodeEnvironmentFlags } = require('process')
 const app = express()
 
 morgan.token('type', function (req, res) { return JSON.stringify(req.body)  })
-// morgan.token('type', function (req, res) { return req.headers['content-type'] })
 
+app.use(express.static('build'))
+app.use(cors())
 app.use(express.json())
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :type'))
 
-// app.use(morgan(function (tokens, req, res) {
-//   return [
-//     tokens.method(req, res),
-//     tokens.url(req, res),
-//     tokens.status(req, res),
-//     tokens.res(req, res, 'content-length'), '-',
-//     tokens['response-time'](req, res), 'ms'
-//   ].join(' ')
-// }))
+
 
 let persons = [
   {
@@ -99,7 +93,7 @@ app.get('/info', (req, res) => {
   return res.send(info)
 })
 
-const PORT = 3001
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
