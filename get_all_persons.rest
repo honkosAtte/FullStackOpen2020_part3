@@ -1,9 +1,11 @@
-# DELETE http://localhost:3001/api/persons/4
+DELETE http://localhost:3001/api/persons/3407
 
 
 POST http://localhost:3001/api/persons
 Content-Type: application/json
+
 {
-  "name": "Atte Patte",
-  "number": "987 654 321"
+  "name": "zzz",
+     "number": "987 654 321"
+
 }
