@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/honkosAtte/FullStackOpen2020_part3#readme",
   "devDependencies": {
+    "eslint": "^7.12.1",
     "nodemon": "^2.0.6"
   },
   "dependencies": {

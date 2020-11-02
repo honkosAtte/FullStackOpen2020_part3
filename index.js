@@ -13,10 +13,6 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms :t
 
 const PORT = process.env.PORT
 
-let persons = [
-]
-
-
 app.get('/', (req, res) => {
   return res.send('<h1>Hello</h1>')
 })
@@ -36,7 +32,7 @@ app.get('/api/persons/:id', (request, response, next) => {
       response.status(404).end()
     }
   })
-  .catch(error => next(error))
+    .catch(error => next(error))
 })
 
 
@@ -53,10 +49,10 @@ app.post('/api/persons', (req, res, next) => {
   })
 
   person.save().then(savedPerson => {
-    console.log('Saved person', savedPerson)
+    //console.log('Saved person', savedPerson)
     res.json(savedPerson)
   })
-  .catch(error => next(error))
+    .catch(error => next(error))
 })
 
 app.put('/api/persons/:id', (request, response, next) => {
@@ -67,7 +63,7 @@ app.put('/api/persons/:id', (request, response, next) => {
     number: body.number,
   }
 
-  Person.findByIdAndUpdate(request.params.id, person, { new: true, runValidators: true })
+  Person.findByIdAndUpdate(request.params.id, person, { new: true, runValidators: false })
     .then(updatedPerson => {
       response.json(updatedPerson)
     })
@@ -77,16 +73,16 @@ app.put('/api/persons/:id', (request, response, next) => {
 app.delete('/api/persons/:id', (request, response, next) => {
   Person.findByIdAndRemove(request.params.id)
     .then(result => {
-      console.log('DeleteResponse ', response)
+      //console.log('DeleteResponse ', response)
       return response.status(204).end()
     })
     .catch(error => next(error))
 })
 
 
-app.get('/info', (req, res) => {
+app.get('/info', (req, res, next) => {
   Person.find({}).then(persons => {
-    console.log('Person are', persons.length)
+    //console.log('Person are', persons.length)
     const info = `<p>Phonebook has info for ${persons.length} people</p> <p>${new Date()}</p>`
     return res.send(info)
   })
